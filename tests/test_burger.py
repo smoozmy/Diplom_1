@@ -1,16 +1,15 @@
-import pytest
 from unittest.mock import Mock
 
 class TestBurger:
     def test_set_buns(self, setup_burger):
-        assert setup_burger.bun.get_name() == 'Булочка', 'Булка не установилась'
+        assert setup_burger.bun.get_name() == 'Булочка'
 
     def test_add_ingredient(self,setup_burger):
         ingredient = Mock()
         ingredient.get_name.return_value = 'Котлета'
         setup_burger.add_ingredient(ingredient)
 
-        assert setup_burger.ingredients[0].get_name() == 'Котлета', 'Ингредиент не добавился'
+        assert setup_burger.ingredients[0].get_name() == 'Котлета'
 
     def test_remove_ingredient(self, setup_burger):
         ingredient1 = Mock()
@@ -23,7 +22,7 @@ class TestBurger:
 
         setup_burger.remove_ingredient(0)
 
-        assert setup_burger.ingredients[0].get_name() == 'Соус', 'Ингредиент не удалился'
+        assert setup_burger.ingredients[0].get_name() == 'Соус'
 
     def test_move_ingredient(self, setup_burger):
         ingredient1 = Mock()
@@ -36,8 +35,8 @@ class TestBurger:
 
         setup_burger.move_ingredient(0, 1)
 
-        assert setup_burger.ingredients[0].get_name() == 'Соус', 'Ингредиенты не поменялись местами'
-        assert setup_burger.ingredients[1].get_name() == 'Котлета', 'Ингредиенты не поменялись местами'
+        assert setup_burger.ingredients[0].get_name() == 'Соус'
+        assert setup_burger.ingredients[1].get_name() == 'Котлета'
 
     def test_get_price(self, setup_burger):
         ingredient1 = Mock()
