@@ -3,16 +3,12 @@ from praktikum.bun import Bun
 
 class TestBun:
 
-    @pytest.mark.parametrize(
-        'name, price',
-        [
-            ('White Bun', 100.0),
-            ('Black Bun', 200.5),
-            ('Red Bun', 150.75),
-        ]
-    )
-    def test_bun_get_name_and_price(self, name, price):
-        bun = Bun(name, price)
-
+    @pytest.mark.parametrize('name', ['Булочка', 'Чёрная булка', 'Булка с кунжутом'])
+    def test_get_name(self, name):
+        bun = Bun(name, 100.0)
         assert bun.get_name() == name
+
+    @pytest.mark.parametrize('price', [0.0, 50.5, 199.99])
+    def test_get_price(self, price):
+        bun = Bun('Булочка', price)
         assert bun.get_price() == price
