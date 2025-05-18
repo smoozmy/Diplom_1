@@ -1,4 +1,5 @@
 from unittest.mock import Mock
+from praktikum.ingredient_types import INGREDIENT_TYPE_FILLING, INGREDIENT_TYPE_SAUCE
 
 class TestBurger:
     def test_set_buns(self, setup_burger):
@@ -54,20 +55,28 @@ class TestBurger:
     def test_get_receipt(self, setup_burger):
         ingredient1 = Mock()
         ingredient1.get_name.return_value = 'Котлета'
-        ingredient1.get_type.return_value = 'Filling'
+        ingredient1.get_type.return_value = INGREDIENT_TYPE_FILLING
         ingredient1.get_price.return_value = 500
 
         ingredient2 = Mock()
         ingredient2.get_name.return_value = 'Соус'
-        ingredient2.get_type.return_value = 'Sauce'
+        ingredient2.get_type.return_value = INGREDIENT_TYPE_SAUCE
         ingredient2.get_price.return_value = 10
 
         setup_burger.add_ingredient(ingredient1)
         setup_burger.add_ingredient(ingredient2)
 
-        receipt = setup_burger.get_receipt()
+        expected_price = setup_burger.bun.get_price() * 2 + 500 + 10
 
-        assert 'Булочка' in receipt
-        assert '= filling Котлета =' in receipt
-        assert '= sauce Соус =' in receipt
-        assert f'Price: {setup_burger.get_price()}' in receipt
+        expected_receipt = (
+            f"(==== Булочка ====)\n"
+            f"= filling Котлета =\n"
+            f"= sauce Соус =\n"
+            f"(==== Булочка ====)\n"
+            f"\n"
+            f"Price: {expected_price}"
+        )
+
+        actual_receipt = setup_burger.get_receipt()
+
+        assert actual_receipt == expected_receipt
